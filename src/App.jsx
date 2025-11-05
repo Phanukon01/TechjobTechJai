@@ -3,6 +3,14 @@ import { useState } from "react";
 import LoginPage from "./Login/Login.jsx";
 import UserDashboard from "./User/UserDashborad.jsx";
 import AdminDashboard from "./Admin/AdminDashboard.jsx";
+import AdminLayout from "./layouts/AdminLayout.jsx";
+
+import AdminRecord from "./Admin/AdminRecord.jsx";
+import AdminSetting from "./Admin/AdminSetting.jsx";
+import AdminWork from "./Admin/AdminWork.jsx";
+
+
+
 import "./App.css";
 
 export default function App() {
@@ -17,33 +25,38 @@ export default function App() {
   return (
     <Router basename="login">
       <Routes>
-        <Route 
-          path="/login" 
+        <Route
+          path="/login"
           element={
-            isAuthenticated ? 
-              <Navigate to={userType === 'admin' ? '/admin' : '/user'} replace /> 
+            isAuthenticated ?
+              <Navigate to={userType === 'admin' ? '/admin' : '/user'} replace />
               : <LoginPage onLogin={handleLogin} />
-          } 
+          }
         />
-        
-        <Route 
-          path="/user" 
+
+        <Route
+          path="/user"
           element={
-            isAuthenticated && userType === 'user' ? 
-              <UserDashboard /> 
+            isAuthenticated && userType === 'user' ?
+              <UserDashboard />
               : <Navigate to="/login" replace />
-          } 
+          }
         />
-        
-        <Route 
-          path="/admin" 
-          element={
-            isAuthenticated && userType === 'admin' ? 
-              <AdminDashboard /> 
-              : <Navigate to="/login" replace />
-          } 
-        />
-        
+
+        <Route element={<AdminLayout />}>
+          <Route path="work" element={<AdminWork />} />
+          <Route path="record" element={<AdminRecord />} />
+          <Route path="setting" element={<AdminSetting />} />
+          <Route
+            path="/admin"
+            element={
+              isAuthenticated && userType === 'admin' ?
+                <AdminDashboard />
+                : <Navigate to="/login" replace />
+            }
+          />
+        </Route>
+
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
