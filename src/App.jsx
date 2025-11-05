@@ -31,7 +31,7 @@ export default function App() {
   }
 
   return (
-    <Router>
+    <Router basename="/login">
       <Routes>
         <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <LoginPage setUser={setUser} />} />
         <Route path="/dashboard" element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/login" replace />} />
