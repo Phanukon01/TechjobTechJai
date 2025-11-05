@@ -8,6 +8,7 @@ import AdminLayout from "./layouts/AdminLayout.jsx";
 import AdminRecord from "./Admin/AdminRecord.jsx";
 import AdminSetting from "./Admin/AdminSetting.jsx";
 import AdminWork from "./Admin/AdminWork.jsx";
+import AdminAccount from "./Admin/AdminAccount.jsx";
 
 
 
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="work" element={<AdminWork />} />
           <Route path="record" element={<AdminRecord />} />
           <Route path="setting" element={<AdminSetting />} />
+          <Route path="account" element={<AdminAccount />} />
           <Route
             path="/admin"
             element={

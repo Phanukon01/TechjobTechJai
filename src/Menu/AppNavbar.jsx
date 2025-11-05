@@ -11,12 +11,15 @@ const AppNavbar = () => {
     
     return (
         <div className="border-1" style={{width: '14rem', backgroundColor: 'black'}}>
+            
+            
             <div className="d-flex align-items-center">
                 <Link to="/setting">
                     <button className="btn btn-outline-primary m-2 rounded-5">1</button>
                 </Link>
                 <span className='text-light'>DATA</span>
             </div>
+
             <p className='mt-2 text-light mx-4'>Main Menu</p>
             
             <Link to="/admin">
@@ -27,7 +30,6 @@ const AppNavbar = () => {
                     DashBoard
                 </button>
             </Link>
-            
             <Link to="/work">
                 <button 
                     className={`btn mb-2 w-100 ${activeMenu === '/work' ? 'btn-light' : 'text-light'}`}
