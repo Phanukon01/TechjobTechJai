@@ -10,7 +10,7 @@ const AppNavbar = () => {
     }, [location.pathname])
     
     return (
-        <div className="border-1" style={{width: '14rem', backgroundColor: 'black'}}>
+        <div className="border-1" style={{width: '14rem', backgroundColor: 'black', position: 'fixed', height: '100vh'  }}>
             
             
             <div className="d-flex align-items-center">

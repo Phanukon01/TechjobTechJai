@@ -9,7 +9,7 @@ import AppNavbar from "../Menu/AppNavbar"
 const AdminLayout = () => {
   
   return (
-        <div className="d-flex border mx-auto border-black rounded-3" style={{width: '100%', height: '100vh'}}>
+        <div className="d-flex mx-auto " style={{width: '100%', height: '100vh'}}>
             {/* <AppHeader /> */}
             <AppNavbar />
             <Outlet />
