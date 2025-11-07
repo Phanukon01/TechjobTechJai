@@ -19,7 +19,7 @@ export default function LoginPage({ setUser }) {
     alert(`Login สำเร็จในฐานะ ${role}`);
 
     // ไปหน้า Dashboard
-    navigate("/dashboard");
+    navigate("/AdminDashboard");
   };
 
   return (
