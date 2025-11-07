@@ -121,7 +121,7 @@ const AdminDashboard = () => {
         <div className="col-12 col-lg-6 w-100">
           <div className="card shadow-sm">
             <div className="card-body">
-              <h5 className="card-title fw-bold mb-3">ยอดขายรายวัน</h5>
+              <h5 className="card-title fw-bold mb-3">การทำงาน</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={salesData}>
                   <CartesianGrid strokeDasharray="3 3" />
