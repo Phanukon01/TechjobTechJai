@@ -10,6 +10,11 @@ import AdminSetting from "./Admin/AdminSetting.jsx";
 import AdminWork from "./Admin/AdminWork.jsx";
 import AdminAccount from "./Admin/AdminAccount.jsx";
 
+import UserLayout from "./layouts/UserLayout.jsx";
+import UserCalendar from "./User/UserCalendar.jsx";
+import UserNotification from "./User/UserNotification.jsx";
+import UserWorkSheet from "./User/UserWorkSheet.jsx";
+
 
 
 import "./App.css";
@@ -35,14 +40,20 @@ export default function App() {
           }
         />
 
-        <Route
-          path="/user"
-          element={
-            isAuthenticated && userType === 'user' ?
-              <UserDashboard />
-              : <Navigate to="/login" replace />
-          }
-        />
+        <Route element={<UserLayout />}>
+          <Route
+            path="/user"
+            element={
+              isAuthenticated && userType === 'user' ?
+                <UserDashboard />
+                : <Navigate to="/login" replace />
+            }
+          />
+          <Route path="calendar" element={<UserCalendar />} />
+          <Route path="notification" element={<UserNotification />} />
+          <Route path="work-worksheet" element={<UserWorkSheet />} />
+
+        </Route>
 
         <Route element={<AdminLayout />}>
           <Route path="work" element={<AdminWork />} />
