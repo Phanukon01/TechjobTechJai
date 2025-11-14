@@ -1,8 +1,6 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal} from 'react-bootstrap';
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-
 
 const AdminWork = () => {
 
