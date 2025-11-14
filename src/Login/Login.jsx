@@ -44,13 +44,13 @@ const LoginPage = ({ onLogin }) => {
   return (
     <div className="min-h-screen bg-blue-100 flex items-center justify-center p-4">
       {/* โลโก้ TechJob ทางซ้าย */}
-      <div className="hidden lg:flex flex-col items-center mr-20">
-        <h1 className="text-6xl font-normal text-gray-800">
+      <div className="flex items-center m-20">
+        <div className="text-6xl font-normal text-gray-800">
           Tech
-          <span className="text-white bg-blue-400 rounded-full h-16 w-16 flex items-center justify-center ml-2 inline-block shadow-lg">
+        </div>
+        <div className="text-6xl text-white text-center bg-blue-400 rounded-full h-32 w-32 flex items-center justify-center ml-2 shadow-lg">
             Job
-          </span>
-        </h1>
+        </div>
       </div>
 
       {/* กล่องฟอร์ม Login */}
