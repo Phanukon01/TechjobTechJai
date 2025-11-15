@@ -4,15 +4,15 @@ import { useState, useEffect } from 'react'
 const AppNavbar = () => {
     const location = useLocation()
     const [activeMenu, setActiveMenu] = useState(location.pathname)
-    
+
     useEffect(() => {
         setActiveMenu(location.pathname)
     }, [location.pathname])
-    
+
     return (
-        <div className="border-1" style={{width: '14rem', backgroundColor: 'black', position: 'fixed', height: '100vh'  }}>
-            
-            
+        <div className="border-1" style={{ width: '14rem', backgroundColor: 'black', position: 'fixed', height: '100vh' }}>
+
+
             <div className="d-flex align-items-center">
                 <Link to="/setting">
                     <button className="btn btn-outline-primary m-2 rounded-5">1</button>
@@ -21,49 +21,52 @@ const AppNavbar = () => {
             </div>
 
             <p className='mt-2 text-light mx-4'>Main Menu</p>
-            
+
             <Link to="/admin">
+
                 <button
                     className={`btn mb-2 w-100 ${activeMenu === '/admin' ? 'btn-light' : 'text-light'}`}
                     onClick={() => setActiveMenu('/admin')}
                 >
-                    DashBoard
+                    <i class="bi bi-bar-chart-fill mx-2"></i>
+                        DashBoard
                 </button>
             </Link>
             <Link to="/work">
-                <button 
+                <button
                     className={`btn mb-2 w-100 ${activeMenu === '/work' ? 'btn-light' : 'text-light'}`}
                     onClick={() => setActiveMenu('/work')}
                 >
                     งาน
                 </button>
             </Link>
-            
-            
+
+
             <Link to="/record">
-                <button 
+                <button
                     className={`btn mb-2 w-100 ${activeMenu === '/record' ? 'btn-light' : 'text-light'}`}
                     onClick={() => setActiveMenu('/record')}
                 >
                     ประวัติงาน
                 </button>
             </Link>
-            
+
             <Link to="/account">
-                <button 
+                <button
                     className={`btn mb-2 w-100 ${activeMenu === '/account' ? 'btn-light' : 'text-light'}`}
+
                     onClick={() => setActiveMenu('/account')}
                 >
                     จัดการบัญชี
                 </button>
             </Link>
-            
+
             <Link to="/setting">
-                <button 
-                    className={`btn mb-2 w-100 ${activeMenu === '/setting' ? 'btn-light' : 'text-light'}`}
+                <button
+                    className={`btn mb-2 d-flex justify-content-center align-items-center position-absolute bottom-0 mb-3 mx-3  ${activeMenu === '/setting' ? 'btn-light' : 'text-light'}`}
                     onClick={() => setActiveMenu('/setting')}
                 >
-                    ตั้งค่า
+                    <i class="bi bi-gear"></i>
                 </button>
             </Link>
         </div>

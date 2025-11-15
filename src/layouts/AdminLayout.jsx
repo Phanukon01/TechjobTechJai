@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import AppFooter from "../Menu/AppFooter"
 import AppHeader from "../Menu/AppHeader"
-import AppNavbar from "../Menu/AppNavbar"
+import AppNavbar from "../Menu/AdminNavbar"
 
 
 

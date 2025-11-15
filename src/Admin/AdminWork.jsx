@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Dropdown } from 'react-bootstrap';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+
+
 
 
 const AdminWork = () => {
@@ -131,7 +133,27 @@ const AdminWork = () => {
                 <td>@fat</td>
                 <td>@fat</td>
                 <td>@fat</td>
-                <button className='btn btn-success'>ส่ง</button>
+                <div className='d-flex justify-content-end'>
+                  <button className='btn btn-success'>ส่ง</button>
+                  <td>
+                    <Dropdown >
+                      <Dropdown.Toggle variant="light" size="sm" id="dropdown-basic">
+                        <i className="bi bi-three-dots-vertical"></i>
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => handleEdit(item.id)}>
+                          <i className="bi bi-pencil-square me-2"></i>
+                          แก้ไข
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleDelete(item.id)} className="text-danger">
+                          <i className="bi bi-trash me-2"></i>
+                          ลบ
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </div>
 
               </tr>
               <tr className='m-2 border-bottom'>
@@ -141,43 +163,62 @@ const AdminWork = () => {
                 <td>@fat</td>
                 <td>@fat</td>
                 <td>@fat</td>
-                <button className='btn btn-success'>ส่ง</button>
+                <div className='d-flex justify-content-end'>
+                  <button className='btn btn-success'>ส่ง</button>
+                  <td>
+                    <Dropdown >
+                      <Dropdown.Toggle variant="light" size="sm" id="dropdown-basic">
+                        <i className="bi bi-three-dots-vertical"></i>
+                      </Dropdown.Toggle>
 
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => handleEdit(item.id)}>
+                          <i className="bi bi-pencil-square me-2"></i>
+                          แก้ไข
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleDelete(item.id)} className="text-danger">
+                          <i className="bi bi-trash me-2"></i>
+                          ลบ
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </div>
               </tr>
             </tbody>
           </table>
         </div>
-            <div className="text-center mt-2">
-                <Button
-                    variant="btn btn-primary"
-                >
-                    First
-                </Button>
-                &nbsp;
-                <Button
-                    variant="btn btn-primary"
+        <div className="text-center mt-2">
+          <Button
+            variant="btn btn-primary"
+          >
+            First
+          </Button>
+          &nbsp;
+          <Button
+            variant="btn btn-primary"
 
-                >
-                    Previous
-                </Button>
-                &nbsp;
-                <span>
-                    1&nbsp;/&nbsp;3
-                </span>
-                &nbsp;
-                <Button
-                    variant="btn btn-primary"
+          >
+            Previous
+          </Button>
+          &nbsp;
+          <span>
+            1&nbsp;/&nbsp;3
+          </span>
+          &nbsp;
+          <Button
+            variant="btn btn-primary"
 
-                >
-                    Next
-                </Button>
-                &nbsp;
-                <Button
-                    variant="btn btn-primary"
-                >
-                    Last
-                </Button>
-            </div>
+          >
+            Next
+          </Button>
+          &nbsp;
+          <Button
+            variant="btn btn-primary"
+          >
+            Last
+          </Button>
+        </div>
       </div>
     </div>
   );
