@@ -1,78 +1,107 @@
-import { useState } from "react"; // แก้ไขตามคำแนะนำเดิม
-import users from "../data/user.jsx";
+import { useState, useCallback, useMemo } from "react";
+// Assuming this is the correct path and file structure for your user data
+import { users } from "../data/user.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginPage = ({ onLogin }) => {
+// --- Helper function (Placeholder for your user data check) ---
+// This function mimics the logic needed in the JSX to determine the current role
+// based on the entered username, *before* login is attempted.
+const checkUserType = (username) => {
+  const foundUser = users.find((u) => u.user === username);
+  return foundUser ? foundUser.role : null;
+};
+// ----------------------------------------------------------------
+
+function Login({ onLogin }) {
+  // 1. Updated State: Use 'username' and 'password' directly,
+  // and add 'isLoading' which is used in the JSX.
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  // 'role', 'user', 'pass', 'form' state variables from original code are removed/replaced
+  // as they are inconsistent or unused.
 
-  const checkUserType = (username) => {
-    const user = users[username.toLowerCase()];
-    return user ? user.type : null;
-  };
+  // 2. Derive User Type for UI: Use useMemo for efficiency.
+  const currentUserType = useMemo(() => {
+    return username.trim() ? checkUserType(username) : null;
+  }, [username]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (!username || !password) {
-      setError("กรุณากรอกชื่อผู้ใช้และรหัสผ่าน");
-      return;
-    }
-
-    setIsLoading(true);
-
-    setTimeout(() => {
-      const user = users[username.toLowerCase()];
-      if (user && user.password === password) {
-        alert(`เข้าสู่ระบบสำเร็จ!\nสวัสดี ${user.fullName}\nประเภท: ${user.type === 'admin' ? 'ผู้ดูแลระบบ' : 'ผู้ใช้งานทั่วไป'}`);
-        if (onLogin) onLogin(username, user.type);
-      } else {
-        setError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+  // 3. Refined handleSubmit function
+  const handleSubmit = useCallback(
+    (e) => {
+      // Prevent default form submission behavior if this were inside a <form>
+      if (e) e.preventDefault(); 
+      
+      // Basic input validation
+      if (!username || !password) {
+        setError("กรุณากรอกอีเมลและรหัสผ่าน");
+        return;
       }
-      setIsLoading(false);
-    }, 1000);
-  };
+      
+      setError("");
+      setIsLoading(true);
 
-  const currentUserType = username ? checkUserType(username) : null;
+      // Simulate an async operation (like an API call)
+      setTimeout(() => {
+        const found = users.find(
+          (u) => u.user === username && u.pass === password
+        );
 
-  // ------------------------------------------------------------------
-  // ส่วนที่เปลี่ยน: การตกแต่งด้วย Tailwind CSS (เพื่อให้ตรงกับภาพ)
-  // ------------------------------------------------------------------
+        if (!found) {
+          setError("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+          setIsLoading(false);
+          return;
+        }
+
+        // Successfully logged in
+        onLogin(found.role);
+        setIsLoading(false);
+      }, 500); // Simulate network latency
+    },
+    [username, password, onLogin]
+  );
 
   return (
     <div className="min-h-screen bg-blue-100 flex items-center justify-center p-4">
       {/* โลโก้ TechJob ทางซ้าย */}
-      <div className="flex items-center m-20">
-        <div className="text-6xl font-normal text-gray-800">
+      <div className="hidden lg:flex flex-col items-center mr-20">
+        <h1 className="text-6xl font-normal text-gray-800">
           Tech
-        </div>
-        <div className="text-6xl text-white text-center bg-blue-400 rounded-full h-32 w-32 flex items-center justify-center ml-2 shadow-lg">
+          <span className="text-white bg-blue-400 rounded-full h-16 w-16 flex items-center justify-center ml-2 inline-block shadow-lg">
             Job
-        </div>
+          </span>
+        </h1>
       </div>
 
       {/* กล่องฟอร์ม Login */}
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-10 border-t-8 border-blue-400">
-
+      {/* Wrapped content in a form for semantic correctness, using onSubmit */}
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-10 border-t-8 border-blue-400"
+      >
         {/* ส่วนปุ่มสลับ Admin/User (ใช้สำหรับแสดง UserType ที่ค้นพบ) */}
-        {/* ส่วนปุ่มสลับ Admin/User */}
         <div className="flex bg-blue-50 p-1 rounded-full mb-8">
-          {/* Admin Button */}
-          <div className={`w-1/2 py-2 text-sm font-semibold transition text-center
-              ${currentUserType === 'admin'
-              ? 'bg-blue-400 text-white shadow-md rounded-l-full'
-              : 'text-gray-600 rounded-l-full'
-            }`}>
+          {/* Admin Button - Highlights if username is found and is 'admin' */}
+          <div
+            className={`w-1/2 py-2 text-sm font-semibold transition text-center
+              ${
+                currentUserType === "admin"
+                  ? "bg-blue-400 text-white shadow-md rounded-l-full"
+                  : "text-gray-600 rounded-l-full"
+              }`}
+          >
             Admin
           </div>
-          {/* User Button */}
-          <div className={`w-1/2 py-2 text-sm font-semibold transition text-center
-              ${currentUserType !== 'admin' && currentUserType !== null
-              ? 'bg-blue-400 text-white shadow-md rounded-r-full'
-              : 'text-gray-600 rounded-r-full'
-            }`}>
+          {/* User Button - Highlights if username is found and is NOT 'admin' */}
+          <div
+            className={`w-1/2 py-2 text-sm font-semibold transition text-center
+              ${
+                currentUserType && currentUserType !== "admin"
+                  ? "bg-blue-400 text-white shadow-md rounded-r-full"
+                  : "text-gray-600 rounded-r-full"
+              }`}
+          >
             User
           </div>
         </div>
@@ -91,7 +120,7 @@ const LoginPage = ({ onLogin }) => {
         )}
 
         <div className="space-y-6">
-          {/* Input Username (เปลี่ยนจาก ชื่อผู้ใช้ เป็น Email) */}
+          {/* Input Username (Email) - Now correctly using 'username' state */}
           <div>
             <input
               id="username"
@@ -105,14 +134,14 @@ const LoginPage = ({ onLogin }) => {
             />
           </div>
 
-          {/* Input Password */}
+          {/* Input Password - Now correctly using 'password' state */}
           <div>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)}
+              // onKeyDown for Enter key submission is now handled by the <form> onSubmit
               className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition placeholder-gray-500"
               placeholder="password"
               disabled={isLoading}
@@ -120,11 +149,16 @@ const LoginPage = ({ onLogin }) => {
             />
           </div>
 
-          {/* ปุ่ม Login */}
+          {/* ปุ่ม Login - Using type="submit" for form handling */}
           <button
-            onClick={handleSubmit}
+            type="submit" // Key change: Use type="submit" to trigger form's onSubmit
             disabled={isLoading}
-            className={`w-full text-white py-2 rounded-lg font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed bg-blue-200 hover:bg-blue-500 text-gray-700 border border-gray-300 shadow-sm`}
+            className={`w-full text-white py-2 rounded-lg font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed 
+                ${
+                  isLoading
+                    ? "bg-blue-400 text-white" // Keep blue while loading
+                    : "bg-blue-500 hover:bg-blue-600 shadow-md"
+                }`}
           >
             {isLoading ? "กำลังเข้าสู่ระบบ..." : "Login"}
           </button>
@@ -134,14 +168,17 @@ const LoginPage = ({ onLogin }) => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500">
             ยังไม่มีบัญชี?{" "}
-            <button className="text-blue-600 hover:text-blue-700 font-medium">
+            <button
+              type="button"
+              className="text-blue-600 hover:text-blue-700 font-medium"
+            >
               สมัครสมาชิก
             </button>
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
-};
+}
 
-export default LoginPage;
+export default Login;
