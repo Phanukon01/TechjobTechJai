@@ -60,10 +60,10 @@ const AppNavbar = () => {
             
             <Link to="/setting">
                 <button 
-                    className={`btn mb-2 w-100 ${activeMenu === '/setting' ? 'btn-light' : 'text-light'}`}
+                    className={`btn  ${activeMenu === '/setting' ? 'btn-light' : 'text-light'}`} style={{ position: 'absolute', bottom: '0.2rem', left: '0.3rem' }}
                     onClick={() => setActiveMenu('/setting')}
                 >
-                    ตั้งค่า
+                    <i className="bi bi-gear"></i>
                 </button>
             </Link>
         </div>
